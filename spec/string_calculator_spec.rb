@@ -22,8 +22,8 @@ RSpec.describe StringCalculator, '#add(numbers)' do
   end
   
   context "with any number of numbers as parameter: '3,16,200,5'" do
-    it "returns the sum of the numbers: 224" do
-      expect(string_calculator.add('3,16,200,5')).to eq 224
+    it "returns the sum of the numbers minus the tax for 200(2): 222" do
+      expect(string_calculator.add('3,16,200,5')).to eq 222
     end
   end
   
@@ -42,6 +42,14 @@ RSpec.describe StringCalculator, '#add(numbers)' do
   context "with numbers larger than 1000: '1,1001'" do
     it "inores them and returns the sum of the others: 1" do
       expect(string_calculator.add('1,1001')).to eq 1
+    end
+  end
+
+  context "with numbers larger than 99" do
+    it "they have to 'pay tax' for their hundreds: '101' -> 100, '375,4' -> 376, '1000' -> 990" do
+      expect(string_calculator.add('101')).to eq 100
+      expect(string_calculator.add('375,4')).to eq 376
+      expect(string_calculator.add('1000')).to eq 990
     end
   end
 
