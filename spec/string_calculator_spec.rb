@@ -17,4 +17,9 @@ RSpec.describe StringCalculator, '#add(numbers)' do
       expect(string_calculator.add('')).to eq 0
     end
   end
+  context "with any number of numbers as parameter: '3,16,200,5'" do
+    it "returns the sum of the numbers: 224" do
+      expect(string_calculator.add('3,16,200,5')).to eq 224
+    end
+  end
 end
