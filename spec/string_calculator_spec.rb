@@ -27,4 +27,9 @@ RSpec.describe StringCalculator, '#add(numbers)' do
       expect(string_calculator.add('45,16\n33\n2')).to eq 96
     end
   end
+  context "with negative numbers as parameter: '-1,2,-3'" do
+    it "throws an exception containing the negative numbers: '-1,-3'" do
+      expect{string_calculator.add('-1,2,-3')}.to raise_error(ArgumentError, /^(?=.*-1)(?=.*-3).*/)
+    end
+  end
 end
