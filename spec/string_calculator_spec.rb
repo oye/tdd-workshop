@@ -22,4 +22,9 @@ RSpec.describe StringCalculator, '#add(numbers)' do
       expect(string_calculator.add('3,16,200,5')).to eq 224
     end
   end
+  context "with both newline and comma as separator: '45,16\\n33\\n2'" do
+    it "return the sum of the numbers: 96" do
+      expect(string_calculator.add('45,16\n33\n2')).to eq 96
+    end
+  end
 end
