@@ -59,4 +59,10 @@ RSpec.describe StringCalculator, '#add(numbers)' do
     end
   end
 
+  context "with exclamation marks surrounding numbers: '1,!999!'" do
+    it "they do not 'pay tax': 1000" do
+      expect(string_calculator.add('1,!999!')).to eq 1000
+    end
+  end
+
 end

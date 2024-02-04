@@ -9,13 +9,29 @@ class StringCalculator
       numbers = split_array.last
     end
 
-    numbers_array = numbers.split(split_regexp).collect{|n| n.to_i}.reject{|n| n > 1000}
+    tax_exempt = []
+    numbers_array = numbers.split(split_regexp).map do |number|
+      if number.start_with?('!') && number.end_with?('!')
+        tax_exempt << number[1..-1].to_i
+        number[1..-1].to_i
+      else
+        number.to_i
+      end
+    end
+
+    numbers_array.reject!{|n| n > 1000}
 
     negative_numbers = numbers_array.select{|n| n < 0}
     raise ArgumentError, "Negative numbers are not allowed: #{negative_numbers.join(', ')}" if negative_numbers.any?
     
-    # numbers greater than 99 have to pay tax
-    numbers_array.map!{|n| n - n/100}
+    # numbers greater than 99 that are not exempt have to pay tax
+    numbers_array.map! do |number|
+      if tax_exempt.include?(number)
+        number
+      else
+        number - number/100
+      end
+    end
 
     numbers_array.collect{|n| n.to_i}.sum
   end
