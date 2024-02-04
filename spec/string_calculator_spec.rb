@@ -53,4 +53,10 @@ RSpec.describe StringCalculator, '#add(numbers)' do
     end
   end
 
+  context "with first line starting with // containing custom separator character: '//;\\n1;3" do
+    it "this sign character also be used to split the numbers: 4" do
+      expect(string_calculator.add('//;\n1;3')).to eq 4
+    end
+  end
+
 end
