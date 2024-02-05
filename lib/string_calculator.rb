@@ -4,13 +4,14 @@ class StringCalculator
     split_regexp = /,|\\n/
     if numbers.start_with?('//')
       split_array = numbers.split('\\n')
-      custom_split_character = split_array.first[-1]
-      split_regexp = /,|\\n|#{custom_split_character}/
+      custom_split_character = Regexp.escape(split_array.first[-1])
+      custom_split_words = split_array.first.scan(/\[(.*?)\]/)
+      split_regexp = /,|\\n|#{custom_split_character}#{custom_split_words.flatten.collect{|w| "|#{Regexp.escape(w)}"}.join}/
       numbers = split_array.last
     end
 
     tax_exempt = []
-    numbers_array = numbers.split(split_regexp).map do |number|
+    numbers_array = numbers.split(split_regexp).collect do |number|
       if number.start_with?('!') && number.end_with?('!')
         tax_exempt << number[1..-1].to_i
         number[1..-1].to_i
@@ -25,7 +26,7 @@ class StringCalculator
     raise ArgumentError, "Negative numbers are not allowed: #{negative_numbers.join(', ')}" if negative_numbers.any?
     
     # numbers greater than 99 that are not exempt have to pay tax
-    numbers_array.map! do |number|
+    numbers_array.collect! do |number|
       if tax_exempt.include?(number)
         number
       else
