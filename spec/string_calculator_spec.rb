@@ -65,10 +65,15 @@ RSpec.describe StringCalculator, '#add(numbers)' do
     end
   end
 
-  context "with custom separator text surrounded by [] in first line: '//[*x*]\\n1*x*2*x*3'" do
+  context "with custom separator words surrounded by [] in first line: '//[*x*]\\n1*x*2*x*3'" do
     it "should also be used as a separator: 6" do
       expect(string_calculator.add('//[*x*]\n1*x*2*x*3')).to eq 6
     end
   end
 
+  context "with multiple separator words: ('//[xyz][$][**]\\n1$5xyz**2'" do
+    it "should use all separators: 8" do
+      expect(string_calculator.add('//[xyz][$][**]\n1$5xyz**2')).to eq 8
+    end
+  end
 end
