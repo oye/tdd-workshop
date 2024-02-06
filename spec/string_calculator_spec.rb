@@ -56,8 +56,16 @@ RSpec.describe StringCalculator, '#add(numbers)' do
       expect(string_calculator.add('//[*x*]\n1*x*2*x*3')).to eq 6
     end
 
-    it 'handles multiple custom delimiters' do
+    it 'handles multiple custom word delimiters' do
       expect(string_calculator.add('//[xyz][$][**]\n1$5xyz**2')).to eq 8
+    end
+
+    it 'handles a combination of custom character delimiter and custom word delimiters' do
+      expect(string_calculator.add('//ø[xyz][$][**]\n1$5xyz**2ø4')).to eq 12
+    end
+
+    it 'handles using [ as the custom character delimiter with custom word delimiters' do
+      expect(string_calculator.add('//[xyz][$][**]\n1$5xyz**2[4')).to eq 12
     end
   end
 
