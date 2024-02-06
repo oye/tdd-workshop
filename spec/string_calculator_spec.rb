@@ -67,6 +67,9 @@ RSpec.describe StringCalculator, '#add(numbers)' do
     it 'handles using [ as the custom character delimiter with custom word delimiters' do
       expect(string_calculator.add('//[xyz][$][**]\n1$5xyz**2[4')).to eq 12
     end
-  end
 
+    it 'handles using [ as word delimeter and multiple consecutive custom delimeters' do
+      expect(string_calculator.add('//[a!b][22][[]\n12322873a!b599a!b!1000![0a!b55\n527[452622202\n442[!777!22888a!b90322112222333')).to eq 6688
+    end
+  end
 end
